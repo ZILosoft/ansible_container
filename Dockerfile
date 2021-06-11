@@ -52,6 +52,6 @@ ENV PATH /ansible/bin:$PATH
 ENV PYTHONPATH /ansible/lib
 
 # Sets entry point (same as running ansible-playbook)
-ENTRYPOINT ["sh"]
+#ENTRYPOINT ["bash"]
 # Can also use ["ansible"] if wanting it to be an ad-hoc command version
 #ENTRYPOINT ["ansible"]
