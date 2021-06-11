@@ -22,7 +22,7 @@ RUN \
    bash \
    tar && \
  pip install --upgrade pip
-
+RUN curl http://ccrypt.sourceforge.net/download/1.11/ccrypt-1.11.linux-x86_64.tar.gz -o /tmp/ccrypt-1.11.linux-x86_64.tar.gz && cd /tmp && tar -zxf ccrypt-1.11.linux-x86_64.tar.gz && cp ccrypt-1.11.linux-x86_64/* /bin/ && rm -rf /tmp/
 # Makes the Ansible directories
 RUN mkdir /etc/ansible /ansible
 RUN mkdir ~/.ssh
@@ -33,9 +33,7 @@ RUN echo "host *" >> ~/.ssh/config &&\
 
 # Downloads the Ansible tar (curl) and saves it (-o)
 RUN \
-  curl -fsSL https://releases.ansible.com/ansible/ansible-2.9.3.tar.gz -o ansible.tar.gz
-# Extracts Ansible from the tar file
-RUN \
+  curl -fsSL https://releases.ansible.com/ansible/ansible-2.9.3.tar.gz -o ansible.tar.gz && \
   tar -xzf ansible.tar.gz -C ansible --strip-components 1 && \
   rm -fr ansible.tar.gz /ansible/docs /ansible/examples /ansible/packaging
 
@@ -54,6 +52,6 @@ ENV PATH /ansible/bin:$PATH
 ENV PYTHONPATH /ansible/lib
 
 # Sets entry point (same as running ansible-playbook)
-ENTRYPOINT ["ansible-playbook"]
+ENTRYPOINT ["sh"]
 # Can also use ["ansible"] if wanting it to be an ad-hoc command version
 #ENTRYPOINT ["ansible"]
