@@ -50,6 +50,11 @@ ENV ANSIBLE_ROLES_PATH /ansible/playbooks/roles
 ENV ANSIBLE_SSH_PIPELINING True
 ENV PATH /ansible/bin:$PATH
 ENV PYTHONPATH /ansible/lib
+RUN curl -L --insecure https://networkgenomics.com/try/mitogen-0.2.9.tar.gz -o /etc/mitogen.tar.gz && \
+    tar -xvzf /etc/mitogen.tar.gz && mv mitogen-0.2.9 /etc/mitogen  && \
+    echo -e "[defaults]\nstrategy_plugins = /etc/mitogen/ansible_mitogen/plugins/strategy \nstrategy = mitogen_linear" > /etc/ansible/ansible.cfg
+
+
 
 # Sets entry point (same as running ansible-playbook)
 #ENTRYPOINT ["bash"]
